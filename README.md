@@ -1,75 +1,60 @@
-# Nuxt Minimal Starter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## Setup
+# Bintel Analytics ERP System - Project Management Overview
 
-Make sure to install dependencies:
+### 🛠️ How It currenlty works
 
-```bash
-# npm
-npm install
+* **Issues as Tasks**: Each task is tracked using a GitHub issue.
+* **Metadata per Task**:
 
-# pnpm
-pnpm install
+  * **Assignee**: Only **one** person should be assigned to each task.
+  * **Labels**:
 
-# yarn
-yarn install
+    * Used to categorize issues by **priority** and **status**.
+    * Must include the following **status labels**:
 
-# bun
-bun install
-```
+      * `Not Started`
+      * `In Progress`
+      * `Completed` (optional — since closed issues also indicate completion)
 
-## Development Server
+    * Must include the following **priority labels**:
 
-Start the development server on `http://localhost:5000`:
+      * `High`
+      * `Medium`
+      * `Low`
+  * **Title** and **Description**: Clearly define the task and its context.
+  * **Repository**: Tasks are organized within relevant project repositories.
 
-```bash
-# npm
-npm run dev
+---
 
-# pnpm
-pnpm dev
+## 🧪 Getting Started
 
-# yarn
-yarn dev
+1. **Create a Project**
+   Start by creating a **Team Planning** GitHub project. This provides a structured board for issue tracking.
 
-# bun
-bun run dev
-```
+2. **Configure Labels**
+   Ensure that the following labels are available in your repository:
 
-## Production
+   * `Not Started`
+   * `In Progress`
+   * `Completed` (optional — closed issues are a better indicator)
+   * `High`
+   * `Medium`
+   * `Low`
 
-Build the application for production:
+3.  **only one assignee**.
 
-```bash
-# npm
-npm run build
+---
 
-# pnpm
-pnpm build
 
-# yarn
-yarn build
+> ⚠️ **Note**
 
-# bun
-bun run build
-```
+As I was preparing this README, I noticed a better way to improve this one.
 
-Locally preview production build:
+Currently, the ERP system uses the **GitHub REST API** to retrieve issue data. However, for better experience and richer data access, i plan to use **GitHub GraphQL API**. I couldnt notice it at first because my first thought was to use REST API because thats what i am familiar with.:
 
-```bash
-# npm
-npm run preview
+I will update it once I return to work. In the meantime, this is the overview of the direction i took.
 
-# pnpm
-pnpm preview
+---
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Please give feedback
