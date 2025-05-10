@@ -2,7 +2,7 @@
 
 # Bintel Analytics ERP System - Project Management Overview
 
-### 🛠️ How It currenlty works
+### How It currenlty works
 
 * **Issues as Tasks**: Each task is tracked using a GitHub issue.
 * **Metadata per Task**:
@@ -27,7 +27,7 @@
 
 ---
 
-## 🧪 Getting Started
+## Getting Started
 
 1. **Create a Project**
    Start by creating a **Team Planning** GitHub project. This provides a structured board for issue tracking.
@@ -47,7 +47,7 @@
 ---
 
 
-> ⚠️ **Note**
+⚠️ **Note**
 
 As I was preparing this README, I noticed a better way to improve this one.
 
@@ -57,4 +57,4 @@ I will update it once I return to work. In the meantime, this is the overview of
 
 ---
 
-## Please give feedback
+## Your feedback will highly be appreciated
