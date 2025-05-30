@@ -18,7 +18,7 @@ export function formatDate(
   const diffSec = Math.floor(diffMs / 1000);
 
   if (diffSec < 60) {
-    return 'just now';
+    return 'less than 1 min';
   }
 
   const diffMin = Math.floor(diffSec / 60);
@@ -42,12 +42,9 @@ export function formatDate(
   }
 
   // Older than two weeks: return formatted date
-  return date.toLocaleDateString(locale, {
+  return "on " + date.toLocaleDateString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
-}
-
-// Example usage:
-// console.log(formatTimeAgo('2025-05-08T09:05:11Z')); // e.g. "1 day ago" or "May 8, 2025"
+} 

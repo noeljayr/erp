@@ -1,37 +1,3 @@
-<template>
-  <div
-    style="grid-auto-rows: min-content"
-    class="grid grid-rows-[auto_1fr] relative overflow-hidden gap-4"
-  >
-    <span class="flex items-center gap-2 font-semibold title">
-      <SvgCheckCircle />
-      Completed
-      <span class="count">{{ taskData?.length }}</span>
-    </span>
-    <div
-      style="grid-auto-rows: min-content"
-      class="grid grid-cols-1 hide-scrollbar relative rounded-[var(--radius)] gap-2 h-full overflow-y-auto"
-    >
-      <template v-if="status === 'pending'">
-        <TasksLoadingState />
-      </template>
-      <template v-else-if="status === 'error'">
-        <TasksErrorState />
-      </template>
-      <template v-else-if="status === 'success' && taskData">
-        <template v-if="taskData.length > 0">
-          <template v-for="task in taskData">
-            <Task :task="task" />
-          </template>
-        </template>
-        <template v-if="taskData.length <= 0">
-          <TasksEmptyState :description="'No tasks have been completed yet'" />
-        </template>
-      </template>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { GithubIssue } from '~/types/taskTypes';
 import Task from './Task.vue';
@@ -60,5 +26,40 @@ const { data: taskData, status } = useFetch(
   }
 );
 </script>
+
+<template>
+  <div
+    style="grid-auto-rows: min-content"
+    class="grid grid-rows-[auto_1fr] relative overflow-hidden gap-4"
+  >
+    <span class="flex items-center gap-2 font-semibold title">
+      <SvgCheckCircle />
+      Completed
+      <span class="count">{{ taskData?.length }}</span>
+    </span>
+
+    <div
+      style="grid-auto-rows: min-content"
+      class="grid grid-cols-1 hide-scrollbar relative rounded-[var(--radius)] gap-2 h-full overflow-y-auto"
+    >
+      <template v-if="status === 'pending'">
+        <TasksLoadingState />
+      </template>
+      <template v-else-if="status === 'error'">
+        <TasksErrorState />
+      </template>
+      <template v-else-if="status === 'success' && taskData">
+        <template v-if="taskData.length > 0">
+          <template v-for="task in taskData">
+            <Task :task="task" />
+          </template>
+        </template>
+        <template v-if="taskData.length <= 0">
+          <TasksEmptyState :description="'No tasks have been completed yet'" />
+        </template>
+      </template>
+    </div>
+  </div>
+</template>
 
 <style scoped></style>

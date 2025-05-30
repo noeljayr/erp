@@ -43,7 +43,7 @@ const { data: repos, status } = useFetch(
 
 <template>
   <div
-    class="grid relative grid-cols-1 grid-rows-[auto_1fr] overflow-hidden h-full gap-4 w-full pb-8 projects-container"
+    class="grid relative grid-cols-1 grid-rows-[auto_1fr] overflow-hidden h-full gap-4 w-full pb-6 projects-container"
   >
     <span class="content-title">
       <SvgGitProjectRepo />

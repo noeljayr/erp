@@ -3,6 +3,7 @@ import { motion } from 'motion-v';
 import ArrowIcon from '~/components/svg/ArrowIcon.vue';
 import { motionTranstion } from '~/utils/motionTranstion';
 
+
 const routes = [
   {
     name: 'Projects',
@@ -121,6 +122,8 @@ const routes = [
       </NuxtLink>
     </motion.div>
   </div>
+
+ 
 </template>
 
 <style scoped>

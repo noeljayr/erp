@@ -13,7 +13,21 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/tailwindcss',
     'motion-v/nuxt',
+    '@pinia/nuxt',
+    '@nuxtjs/apollo',
   ],
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: `https://api.github.com/graphql`,
+        httpLinkOptions: {
+          headers: {
+            Authorization: `Bearer ${process.env.NUXT_GITHUB_ACCESS_TOKEN}`,
+          },
+        },
+      },
+    },
+  },
   css: [
     '@/assets/css/globals.css',
     '@fontsource/inter/300.css',

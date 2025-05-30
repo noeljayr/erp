@@ -1,13 +1,24 @@
+<script setup lang="ts">
+import { useAddTaskModalStore } from '~/stores/addTaskModal';
+import ChevronDown from './svg/ChevronDown.vue';
+
+const modal = useAddTaskModalStore();
+</script>
+
 <template>
   <div
     class="top-nav py-4 flex gap-4 items-center h-fit justify-between w-full"
   >
     <NuxtLink href="/" class="logo flex gap-2 items-center mr-auto">
-      <NuxtImg class="h-[1.75rem]" src="/bintel.png" />
+      <NuxtImg class="h-[1.35rem]" src="/bintel.png" />
       <span style="font-family: 'Sora', san-serif" class="font-semibold"
         >Bintel Analytics</span
       >
     </NuxtLink>
+
+    <span @click="modal.setModalActive" class="add-btn px-2">
+      <SvgPlus />
+    </span>
 
     <div class="input-group search relative">
       <svg
@@ -72,8 +83,6 @@
     <div class="cursor-pointer flex items-center justify-center"></div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .top-nav {

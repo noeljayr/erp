@@ -55,15 +55,15 @@ html {
   --p4: clamp(0.45rem, 1.5vw, 0.55rem);
 
   /* Radius */
-  --radius-l: clamp(0.95rem, 2.35vw, 1.25rem);
-  --radius: clamp(0.75rem, 2vw, 1rem);
-  --radius-m: clamp(0.5rem, 1.5vw, 0.75rem);
-  --radius-s: clamp(0.4rem, 1.25vw, 0.6rem);
+  --radius-l: clamp(1rem, 2.4vw, 1.3rem);
+  --radius: clamp(0.85rem, 2.15vw, 1.05rem);
+  --radius-m: clamp(0.55rem, 1.55vw, 0.8rem);
+  --radius-s: clamp(0.5rem, 1.3vw, 0.65rem);
   --radius-ss: clamp(0.25rem, 1vw, 0.45rem);
   --radius-xs: clamp(0.2rem, 0.8vw, 0.3rem);
   --padding: clamp(0.75rem, 3vw, 1rem);
 
-  --transition: ease 0.35s;
+  --transition: ease 0.5s;
   --cta-hover: brightness(93%);
 }
 
@@ -134,6 +134,22 @@ a {
   text-decoration: none;
 }
 
+.font-p-1{
+  font-size: var(--p1);
+}
+
+.font-p-2{
+  font-size: var(--p2);
+}
+
+.font-p-3{
+  font-size: var(--p3);
+}
+
+.font-p-4{
+  font-size: var(--p4);
+}
+
 .page-content {
   /* grid-template-columns: 23rem 1fr; */
   grid-template-columns: 1fr;
@@ -151,9 +167,10 @@ a {
 }
 
 .component {
-  border: 1px solid var(--border);
-  background-color: #FCFCFD;
   border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid #ffffff;
+  backdrop-filter: blur(15px);
 }
 
 .content-title {
@@ -211,9 +228,10 @@ svg {
   font-size: var(--p2);
   padding: 0.25rem;
   padding-left: 0.85rem;
-  padding-right: 0.65rem;
+  padding-right: 0.85rem;
   border-radius: var(--radius-s);
   font-family: 'Sora', sans-serif;
+  height: 2.35rem;
 }
 
 .cta {
@@ -306,6 +324,27 @@ hr {
 }
 
 .input-group svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.add-btn {
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: var(--radius-s);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #e9ecf0;
+  border: 1px solid #b1c6d8;
+  position: relative;
+  cursor: pointer;
+  color: var(--primary);
+  font-size: var(--p2);
+}
+
+.add-btn svg {
   height: 1.25rem;
   width: 1.25rem;
 }
