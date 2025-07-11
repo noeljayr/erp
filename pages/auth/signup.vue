@@ -1,24 +1,33 @@
 <script setup lang="ts">
-import { motion, AnimatePresence } from 'motion-v';
+import { motion } from 'motion-v';
 import { ref } from 'vue';
-import EmailIcon from '~/components/svg/EmailIcon.vue';
 import Eye from '~/components/svg/Eye.vue';
-import EyeSlash from '~/components/svg/EyeSlash.vue';
 import { BASE_URL } from '~/constants/BASE_URL';
-import PasswordIcon from '~/components/svg/PasswordIcon.vue';
-
-const token = useCookie('bintel_auth_token');
-
-const passwordInput = ref(true);
+import EyeSlash from '~/components/svg/EyeSlash.vue';
 const submitButton = ref<HTMLButtonElement | null>(null);
+const passwordInput = ref(true);
+
+const partnersFirstName = ['walu', 'bryan', 'malango', 'jerome'];
+
+const first_name = ref('');
+const last_name = ref('');
+const email = ref('');
+const phone = ref('');
+const role = ref('');
+const password = ref('');
+const responseMessage = ref('');
 
 function changeInputType() {
   passwordInput.value = !passwordInput.value;
 }
 
-const email = ref('');
-const password = ref('');
-const responseMessage = ref('');
+const getUserRole = (first_name: string) => {
+  if (partnersFirstName.includes(first_name.toLowerCase())) {
+    role.value = 'Partner';
+  } else {
+    role.value = 'Employee';
+  }
+};
 
 const submit = () => {
   submitButton.value?.click();
@@ -41,28 +50,29 @@ const setError = (state: boolean) => {
 };
 
 const setResponseMessage = (message: string) => {
-  if (message && message.length > 2) {
-    responseMessage.value = message;
-  } else {
-    responseMessage.value = 'Try again in a moment.';
-  }
+  responseMessage.value = message;
 };
 
-const login = async (e: Event) => {
+const signUp = async (e: Event) => {
   e.preventDefault();
+  getUserRole(first_name.value);
 
   setLoading(true);
   setError(false);
   setSuccess(false);
 
   try {
-    const response = await fetch(`${BASE_URL}/users/login`, {
+    const response = await fetch(`${BASE_URL}/users/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        first_name: first_name.value,
+        last_name: last_name.value,
         email: email.value,
+        phone: phone.value,
+        role: role.value,
         password: password.value,
       }),
     });
@@ -72,13 +82,9 @@ const login = async (e: Event) => {
     if (response.status == 200) {
       setSuccess(true);
       setResponseMessage(data.message);
-      token.value = data.token;
-      window.setTimeout(()=>{
-        navigateTo('/');
-      }, 1500)
     } else {
-      setResponseMessage(data.message);
       setError(true);
+      setResponseMessage(data.message);
     }
   } catch (err) {
     setError(true);
@@ -92,45 +98,65 @@ const login = async (e: Event) => {
   <AnimatePresence mode="popLayout">
     <motion.form
       key="form"
-      @submit="login"
       layout="position"
-      :initial="{ opacity: 0 }"
-      :animate="{ opacity: 1 }"
-      :exit="{ opacity: 0 }"
+      @submit="signUp"
+      :initial="{ opacity: 0, x: -60 }"
+      :animate="{ opacity: 1, x: 0 }"
+      :exit="{ opacity: 0, x: -60 }"
       :transition="{ ease: [0.25, 0.1, 0.25, 1.0], duration: 0.5 }"
       class="flex flex-col gap-3"
     >
       <NuxtImg class="mx-auto mb-4" src="/bintel.png" />
 
-      <div class="input-group">
-        <EmailIcon />
-        <input required v-model="email" type="text" placeholder="Email" />
+      <div class="grid grid-cols-2 gap-3">
+        <div class="input-group">
+          <input
+            v-model="first_name"
+            required
+            type="text"
+            placeholder="First name"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            v-model="last_name"
+            required
+            type="text"
+            placeholder="Last name"
+          />
+        </div>
       </div>
 
       <div class="input-group">
-        <PasswordIcon />
+        <input v-model="email" required type="email" placeholder="Email" />
+      </div>
 
+      <div class="input-group">
+        <input v-model="phone" required type="text" placeholder="Phone" />
+      </div>
+
+      <div class="input-group relative">
         <input
           required
-          v-model="password"
           :type="passwordInput ? 'password' : 'text'"
           placeholder="Password"
+          v-model="password"
         />
 
-        <span class="cursor-pointer" @click="changeInputType">
+        <span class="cursor-pointer absolute right-2" @click="changeInputType">
           <span v-if="passwordInput"> <Eye /> </span>
           <span v-if="!passwordInput"> <EyeSlash /> </span>
         </span>
       </div>
       <button ref="submitButton" :disabled="loading" class="cta">
         <UxLoader v-if="loading" />
-        <template v-else>Login</template>
+        <template v-else>Signup</template>
       </button>
-      <NuxtLink to="#" class="ml-auto font-semibold hover:underline"
-        >Forgot password?</NuxtLink
+
+      <NuxtLink to="/auth/login" class="ml-auto font-semibold hover:underline"
+        >Already have an account?</NuxtLink
       >
     </motion.form>
-
     <motion.span
       key="error"
       :initial="{ opacity: 0, y: 60 }"
@@ -155,14 +181,17 @@ const login = async (e: Event) => {
       :exit="{ opacity: 0, y: 60 }"
       :transition="{ ease: [0.25, 0.1, 0.25, 1.0], duration: 0.5 }"
       layout="position"
-      class="bg-green-200 font-semibold px-8 py-2 rounded-3xl font-p-3 text-green-600 border border-green-300"
+      class="error bg-green-200 font-semibold px-8 py-2 rounded-3xl font-p-3 text-green-600 border border-green-300"
       v-if="success"
-      >You're logged in and ready to go...
+      >{{ responseMessage }}
+      <NuxtLink to="/auth/login" class="font-bold underline"
+        >Login in now</NuxtLink
+      >
     </motion.div>
   </AnimatePresence>
 </template>
 
-<style scoped>
+<style scoped> 
 .cta {
   height: 2.8rem;
   align-items: center;
@@ -171,6 +200,12 @@ const login = async (e: Event) => {
 
 .input-group {
   height: 2.8rem;
+  width: 100%;
+  display: flex;
+}
+
+.input-group input {
+  width: 100%;
 }
 
 img {
@@ -183,6 +218,7 @@ form {
   padding: 1rem;
   border-radius: var(--radius-l);
   border: 1px solid var(--border);
+  width: 27rem !important;
 }
 
 .ml-auto {

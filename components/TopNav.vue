@@ -11,9 +11,7 @@ const modal = useAddTaskModalStore();
   >
     <NuxtLink href="/" class="logo flex gap-2 items-center mr-auto">
       <NuxtImg class="h-[1.35rem]" src="/bintel.png" />
-      <span style="font-family: 'Sora', san-serif" class="font-semibold"
-        >Bintel Analytics</span
-      >
+      <span style="font-family: 'Sora', san-serif" class="font-semibold"></span>
     </NuxtLink>
 
     <span @click="modal.setModalActive" class="add-btn px-2">

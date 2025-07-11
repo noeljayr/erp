@@ -1,7 +1,20 @@
 <script setup lang="ts">
+import { jwtDecode } from 'jwt-decode';
 import { motion } from 'motion-v';
 import ArrowIcon from '~/components/svg/ArrowIcon.vue';
-import { motionTranstion } from '~/utils/motionTranstion';
+import { COOKIE_NAME } from '~/constants/COOKIE_NAME';
+import type { TokenTypes } from '~/types/TokenTypes';
+
+const token = useCookie(COOKIE_NAME);
+
+const user = ref<TokenTypes>();
+
+onMounted(() => {
+  if (token && token.value) {
+    const decodedToken: TokenTypes = jwtDecode(token.value);
+    user.value = decodedToken;
+  }
+});
 
 
 const routes = [
@@ -13,7 +26,7 @@ const routes = [
   {
     name: 'Finances',
     description: 'Automate finance management',
-    link: '#',
+    link: '/finances',
   },
   {
     name: 'HR System',
@@ -30,13 +43,20 @@ const routes = [
 
 <template>
   <div class="flex flex-col gap-8 w-fit h-full justify-center items-center">
-    <h4 class="opacity-75">Bintel Analytics</h4>
+    <div class="flex items-center fixed top-4 w-[55rem]">
+      <h4 class="opacity-75 mr-auto">Bintel Analytics</h4>
+
+      <NuxtLink to="/auth/login" v-if="!user" class="font-semibold px-4 p-2 bg-[var(--white)] flex items-center gap-2 rounded-[calc(var(--radius-s)_*_0.75)] border border-[var(--border)]">Login</NuxtLink>
+      <span v-if="user" class="h-8 w-8 bg-[var(--black)] rounded-full flex items-center justify-center text-white font-bold">
+        {{ user.first_name[0] }}
+      </span>
+    </div>
 
     <motion.div
       :initial="{ opacity: 0 }"
       :animate="{ opacity: 1 }"
       :exit="{ opacity: 0 }"
-      :transition="motionTranstion"
+      :transition="{ ease: [0.25, 0.1, 0.25, 1.0], duration: 0.5 }"
       class="portal grid grid-cols-4 gap-4 w-[55rem] pb-14"
     >
       <NuxtLink
@@ -78,7 +98,7 @@ const routes = [
       :initial="{ opacity: 0 }"
       :animate="{ opacity: 1 }"
       :exit="{ opacity: 0 }"
-      :transition="motionTranstion"
+      :transition="{ ease: [0.25, 0.1, 0.25, 1.0], duration: 0.5 }"
       class="other-links flex gap-6 mt-4"
     >
       <NuxtLink
@@ -122,8 +142,6 @@ const routes = [
       </NuxtLink>
     </motion.div>
   </div>
-
- 
 </template>
 
 <style scoped>
